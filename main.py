@@ -3,7 +3,6 @@ import config
 import discord
 from discord.ext import commands
 import requests
-import session
 
 intents = discord.Intents.default()
 intents.typing = False
