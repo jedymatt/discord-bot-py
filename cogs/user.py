@@ -1,6 +1,9 @@
-import imp
 from discord.ext import commands
-from session import session
+from requests import request
+import requests
+from cogs.api.character import Character
+
+from cogs.utils.api import create_character
 
 
 class User(commands.Cog):
@@ -14,8 +17,18 @@ class User(commands.Cog):
 
     @user.group()
     async def register(self, ctx):
-        session.post('/api/characters', json={'params': ctx.message.content})
-        await ctx.send('Registered')
+        response = create_character(ctx.author.id)
+        if response.status_code != 200:
+            await ctx.send(
+                f'{ctx.author.mention} your character has been created.'
+            )
+
+        await ctx.send('Unexpected error occured.')
+
+    @user.group()
+    async def info(self, ctx):
+        character = Character.find_by_discord_id(ctx.author.id)
+        await ctx.send(str(character.__dict__))
 
 
 def setup(bot):
