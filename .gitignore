@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # Python IDE generated files
-/.idea/
-/.vscode/
+/.idea
+/.vscode
